@@ -1,0 +1,7 @@
+name: php-mvc
+
+recipe: lamp
+config:
+  php: '8.1'
+  webroot: public
+  database: mysql

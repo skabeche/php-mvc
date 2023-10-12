@@ -1,0 +1,4 @@
+# Project files
+.env
+/vendor
+/node_modules

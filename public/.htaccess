@@ -1,0 +1,35 @@
+#
+# Apache settings for Wonde Technical Exercise.
+#
+
+DirectoryIndex index.php
+
+ErrorDocument 404 /app/templates/404-error.tpl.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+
+  # Redirect all requests to index.php as part of front controller.
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.+)$ index.php [QSA,L]
+</IfModule>
+
+# Don't show directory listings.
+Options -Indexes
+
+# Protect files.
+<FilesMatch "^(.*\.(yml|yaml|inc|ini)|\.env|\.env.example|\.gitignore|composer\.(json|lock)|README\.md)|class\.php|tpl\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>
+
+# Protect directories.
+# Access is not allowed to folders with . suffixed to the name, e.g. .git/ or .vscode/
+# Access is not allowed to some app folders.
+<If "%{REQUEST_URI} =~ m#^\/\.(.*)|^\/(vendor|core|controllers)#">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</If>

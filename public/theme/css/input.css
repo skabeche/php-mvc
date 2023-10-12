@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply inline-block text-center text-sm py-3 px-5 rounded border cursor-pointer border-blue-500 bg-blue-500 text-white font-bold no-underline hover:text-blue-500 hover:border-blue-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all;
+  }
+
+  .btn-secondary {
+    @apply inline-block text-center text-sm py-3 px-5 rounded border cursor-pointer border-red-500 bg-red-500 text-white font-bold no-underline hover:text-red-500 hover:border-red-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition-all;
+  }
+
+  .required {
+    @apply after:text-red-500 after:ml-1 after:content-['*'];
+  }
+
+  /* Nav */
+  .nav-main a {
+    @apply flex items-center text-gray-800;
+  }
+  .nav-main.offcanvas {
+    @apply absolute z-40 top-0 -left-[100vh] w-1/2 md:w-auto h-[100%] p-12 md:p-0 bg-gradient-to-tl from-black/80 to-black text-white transition-all duration-500 ease-in-out;
+  }
+  .nav-main.offcanvas ul {
+    @apply flex-col;
+  }
+  .nav-main.offcanvas a {
+    @apply text-white;
+  }
+  .nav-main.oncanvas {
+    @apply static bg-none;
+  }
+  .nav-main.oncanvas ul {
+    @apply flex-row;
+  }
+  .nav-main.oncanvas a {
+    @apply text-gray-800;
+  }
+  .nav-main.open {
+    @apply absolute left-0;
+  }
+  .navbar-toggler {
+    @apply z-50;
+  }
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-gray-100 text-gray-800;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply flex items-center font-bold uppercase mb-6;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  a {
+    @apply text-blue-500 hover:underline;
+  }
+
+  table {
+    @apply w-full text-left items-start rounded shadow bg-white p-4;
+  }
+
+  table tbody td,
+  table tbody th {
+    @apply p-2 align-top;
+  }
+
+  label {
+    @apply block hover:cursor-pointer;
+  }
+
+  input:not([type=submit]) {
+    @apply w-full;
+  }
+
+  input:not([type=submit]),
+  select {
+    @apply rounded px-4 py-2 border-gray-300 bg-white;
+  }
+}
+
+/* Message */
+.message {
+  @apply text-white p-4 rounded;
+}
+.message-success {
+  @apply bg-green-500;
+}
+.message-error {
+  @apply bg-red-500;
+}
+.message-warning {
+  @apply bg-amber-500;
+}
