@@ -14,8 +14,14 @@
             "App\\": "App/"
         }
     },
+    "autoload'dev": {
+        "psr-4": {
+            "Tests\\": "Tests/"
+        }
+    },
     "require-dev": {
-        "kint-php/kint": "^5.0"
+        "kint-php/kint": "^5.0",
+        "phpunit/phpunit": "^10.4"
     },
     "require": {
         "symfony/yaml": "^6.3",
