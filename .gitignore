@@ -1,5 +1,8 @@
 # Project files
 .env
 /vendor
-/node_modules
+/theme/node_modules
+/theme/.php-tmp
+/public/dist
+/public/manifest.json
 .phpunit.result.cache
