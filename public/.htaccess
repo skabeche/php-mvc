@@ -4,7 +4,7 @@
 
 DirectoryIndex index.php
 
-ErrorDocument 404 /app/templates/404-error.tpl.php
+ErrorDocument 404 /App/Views/error404.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine on
@@ -18,17 +18,8 @@ ErrorDocument 404 /app/templates/404-error.tpl.php
 # Don't show directory listings.
 Options -Indexes
 
-# Protect files.
-<FilesMatch "^(.*\.(yml|yaml|inc|ini)|\.env|\.env.example|\.gitignore|composer\.(json|lock)|README\.md)|class\.php|tpl\.php$">
-  <IfModule mod_authz_core.c>
-    Require all denied
-  </IfModule>
-</FilesMatch>
-
-# Protect directories.
-# Access is not allowed to folders with . suffixed to the name, e.g. .git/ or .vscode/
-# Access is not allowed to some app folders.
-<If "%{REQUEST_URI} =~ m#^\/\.(.*)|^\/(vendor|core|controllers)#">
+# Protect output file.
+<If "%{REQUEST_URI} =~ m#^\/\.(.*)|^\/dist\/index.php#">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>

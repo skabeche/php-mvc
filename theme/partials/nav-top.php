@@ -1,7 +1,7 @@
 <div class="container flex justify-between items-center py-4">
   <div class="brand">
     <a href="/" class="flex gap-2 items-center text-black font-bold">
-      <img src="/theme/images/logo.svg" class="w-12 h-12" alt="Logo">
+      <img src="/images/logo.svg" class="w-12 h-12" alt="Logo">
       PHP MVC
     </a>
   </div>

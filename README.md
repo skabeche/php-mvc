@@ -5,7 +5,7 @@ Repository for PHP - MVC framework.
 ## Overview
 
 Simple MVC system created with PHP for demo purposes.
-On the front-end side, it utilizes Tailwind and Vanilla JavaScript.
+On the front-end side, it utilizes Vite, Tailwind and Vanilla JavaScript.
 It still needs many improvements, changes and testing, I do not think the system is ready for production but give it a try.
 
 ## Requirements
@@ -36,7 +36,7 @@ Run composer in your site to get PHP dependencies/libraries.
 composer install
 ```
 
-Run npm in your site to get JS dependencies/libraries.
+Run npm in `/theme` folder to get JS dependencies/libraries.
 
 ```bash
 npm install
@@ -48,18 +48,10 @@ The webroot folder must point to `/public`.
 
 ## How to run
 
-The system has installed the Tailwind Standalone CLI (see https://tailwindcss.com/blog/standalone-cli and https://tailwindcss.com/docs/installation).
-
-### Start dev build process
+If you use Lando, just start it:
 
 ```bash
-npx tailwindcss -i ./public/theme/css/input.css -o ./public/theme/css/output.css --watch
-```
-
-### Build for production.
-
-```bash
-npx tailwindcss -i ./public/theme/css/input.css -o ./public/theme/css/output.css --minify
+lando start
 ```
 
 ## How to create a new page
@@ -103,14 +95,25 @@ Every time a new page is created in `routes.yml`, it is necessary to set what ty
 
 ## Theme
 
-The system is using a custom theme made with Tailwind.
+Although the basic theme is not built with any JS framework, [Vite](https://vitejs.dev/) is integrated in the `/theme` folder for a modern workflow (still work in progress).
 
-### CSS
+Main CSS code is in the file `/theme/styles.css`. The theme is styled with [Tailwind](https://tailwindcss.com).
 
-Main CSS code in the file `/theme/css/input.css`.
+Main JavaScript code is in the file `/theme/scripts.js`. Code with Vanilla JavaScript.
 
-### JavaScript
+### How to run
 
-Main JavaScript code in the file `/theme/js/scripts.js`.
+#### Start dev build process
 
-Code with Vanilla JavaScript.
+(Still work in progress, it does not reflect changes yet)
+
+```bash
+npm run dev
+```
+
+#### Build for production.
+(Works fine)
+
+```bash
+npm run build
+```
