@@ -12,13 +12,16 @@ class LoginController extends Controller {
   public function index(): array {
     $output = [];
 
-    if ($this->requestMethod === 'POST') {
-      $session = new Session;
-      $session::create();
-      header('Location: /dashboard');
-      exit;
-    }
+    // do something.
 
     return $output;
+  }
+
+  public function login(): void {
+    $session = new Session;
+    $session::create();
+    Message::set('You are now logged in');
+    header('Location: /dashboard');
+    exit;
   }
 }

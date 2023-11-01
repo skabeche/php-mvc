@@ -8,6 +8,9 @@ pages:
   #     title: ''
   #     body_classes: ''
   #     access_role: ''
+  #   methods:
+  #     get: ''
+  #     post: ''
 
   - path: '/'
     settings:
@@ -16,6 +19,8 @@ pages:
       title: 'Home'
       body_classes: 'front-page home-page'
       access_role: 'guest'
+    methods:
+      get: 'index'
 
   - path: '/login'
     settings:
@@ -24,12 +29,17 @@ pages:
       title: 'Login'
       body_classes: 'login-page'
       access_role: 'guest'
+    methods:
+      get: 'index'
+      post: 'login'
 
   - path: '/logout'
     settings:
       controller: 'LogoutController'
       view: 'logout'
       access_role: 'auth'
+    methods:
+      get: 'index'
 
   - path: '/dashboard'
     settings:
@@ -38,6 +48,8 @@ pages:
       title: 'Dashboard'
       body_classes: 'dashboard-page'
       access_role: 'auth'
+    methods:
+      get: 'index'
 
 # Error pages.
 pages.error:
@@ -48,3 +60,5 @@ pages.error:
       title: '404 - Page not found'
       body_classes: '404-page'
       access_role: 'guest'
+    methods:
+      get: 'index'

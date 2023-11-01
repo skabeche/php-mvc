@@ -4,8 +4,10 @@ Repository for PHP - MVC framework.
 
 ## Overview
 
-Simple MVC system created with PHP for demo purposes.
+Simple MVC system created with PHP for demo purposes. A different approach creating routes/paths through a YAML file.
+
 On the front-end side, it utilizes Vite, Tailwind and Vanilla JavaScript.
+
 It still needs many improvements, changes and testing, I do not think the system is ready for production but give it a try.
 
 ## Requirements
@@ -74,6 +76,9 @@ pages:
       title: "page title"
       body_classes: "css classes for body tag"
       access_role: "(guest, auth), what role can access to the resource"
+    methods:
+      get: "Controller function to handle the logic"
+      post: "Controller function to handle the logic"
 ```
 
 #### Views data

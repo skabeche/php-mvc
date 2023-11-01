@@ -20,20 +20,35 @@ use Symfony\Component\Yaml\Yaml;
  *   - access_role: Check what type of user has access, possible values:
  *      - guest (not authenticated)
  *      - auth (authenticated)
+ *   - methods:
+ *      - get: Controller function to handle the logic.
+ *      - post: Controller function to handle the logic.
  *
- * $settings = array(
+ * $settings = [
  *   'controller' => '',
  *   'view' => '',
  *   'title' => '',
  *   'body_classes' => '',
  *   'access_role' => '',
- * );
+ * ];
+ * $methods = [
+ *   'get' => '',
+ *   'post' => '',
+ * ];
  *
  * @see routes.yml
  */
 class Router {
 
-  public function getRoutes(): array {
+  protected $requestHttpValues;
+  protected $requestHttpMethod;
+
+  public function __construct() {
+    $this->requestHttpValues = Utils::sanitize($_REQUEST);
+    $this->requestHttpMethod = strtolower($_SERVER["REQUEST_METHOD"]);
+  }
+
+  private static function getRoutes(): array {
     ob_start();
 
     $routes = Yaml::parseFile(__DIR__ . '/../App/routes.yml');
@@ -41,29 +56,90 @@ class Router {
     return $routes;
   }
 
-  public function getCurrentPath(): string {
+  public static function getCurrentPath(): string {
     $request = parse_url($_SERVER['REQUEST_URI']);
 
     return empty($request['path']) ? '/' : $request['path'];
   }
 
-  public function getSettings(): array {
-    $routes = $this->getRoutes();
-    $currentPath = $this->getCurrentPath();
+  private function getKeyPath(): int|bool {
+    $routes = self::getRoutes();
+    $currentPath = self::getCurrentPath();
 
     // Get all routing paths.
     $routerPaths = Utils::arrayColumnRecursive($routes, 'path');
     // Get the key for the current path.
     $keyPath = array_search($currentPath, $routerPaths);
 
-    // If current path exists.
-    if ($keyPath !== false) {
-      $settings = $routes['pages'][$keyPath]['settings'];
-    } else { // If current path does not exist, 404 error.
-      http_response_code(404);
-      $settings = $routes['pages.error']['404']['settings'];
+    return $keyPath;
+  }
+
+  private function parsePath(): array {
+    $routes = self::getRoutes();
+    $keyPath = $this->getKeyPath();
+    $output = [];
+
+    if (!isset($routes['pages'][$keyPath]['settings'])) {
+      throw new \Exception('Settings not found in routes file for current path.');
+    }
+    if (!isset($routes['pages'][$keyPath]['methods'])) {
+      throw new \Exception('Methods not found in routes file for current path.');
     }
 
-    return $settings;
+    // If current path exists.
+    if ($keyPath !== false) {
+      $output['settings'] = $routes['pages'][$keyPath]['settings'];
+      $output['methods'] = $routes['pages'][$keyPath]['methods'];;
+    } else { // If current path does not exist, 404 error.
+      http_response_code(404);
+      $output['settings'] = $routes['pages.error']['404']['settings'];
+      $output['methods'] = $routes['pages.error']['404']['methods'];
+    }
+
+    return $output;
+  }
+
+  public function getSettings(): array {
+    $settings = $this->parsePath();
+
+    return $settings['settings'];
+  }
+
+  public function getMethods(): array {
+    $methods = $this->parsePath();
+
+    return $methods['methods'];
+  }
+
+  public function getControllerData(): array {
+    $settings = $this->getSettings();
+    $methods = $this->getMethods();
+
+    // Get specific controller.
+    if (isset($settings['controller'])) {
+      // Create an instance of the specific controller.
+      $appController = "App\Controllers\\" . $settings['controller'];
+      $instanceController = new $appController();
+
+      if (!empty($methods)) {
+        if (!array_key_exists($this->requestHttpMethod, $methods)) {
+          http_response_code(405);
+          throw new \Exception('Method not allowed.');
+        }
+
+        // Call the specific function to handle the request and output data for view.
+        $callback = $methods[$this->requestHttpMethod];
+        $data = $instanceController->$callback();
+        // Output request method and values.
+        $data['request']['method'] = $this->requestHttpMethod;
+        $data['request']['values'] = $this->requestHttpValues;
+      } else {
+        throw new \Exception('Request method not found.');
+      }
+
+      return $data;
+    }
+
+    return [];
   }
 }

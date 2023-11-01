@@ -5,6 +5,11 @@
  * Main point and general functions that need to be loaded to run the application.
  */
 
+use Core\Session;
+use Core\Router;
+use Core\Controller;
+use Core\Message;
+
 // Get dependencies handled by Composer.
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -20,29 +25,23 @@ if ($_ENV['APP_ENV'] == 'dev') {
 }
 
 // Starts a session.
-$session = new Core\Session();
+$session = new Session();
 $session::start();
 
 // Starts router/front controller and get theme settings.
-$router = new Core\Router();
+$router = new Router();
 $settings = $router->getSettings();
 
 // Check if user with a specific role has access to the current page.
 if (!$session::hasAccessByRole($settings['access_role'])) {
+  Message::set('Access restricted.', 'error');
   header('Location: /');
   exit;
 }
 
-// Get specific controller.
-if (isset($settings['controller'])) {
-  // Create an instance of the specific controller.
-  $appController = "App\Controllers\\" . $settings['controller'];
-  $instanceController = new $appController();
-  // Call the index method to handle the request.
-  $data = $instanceController->index();
-
-  $controller = new Core\Controller();
-}
+// Get controller and specific controller data.
+$controller = new Controller();
+$data = $router->getControllerData();
 
 // Get the message system.
-$message = Core\Message::get();
+$message = Message::get();

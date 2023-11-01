@@ -29,7 +29,7 @@ class UserModel extends Model {
    *
    * @return array
    */
-  public function getUserById($id): array {
+  public function getUserById(int $id): array {
     $query = "SELECT * FROM users WHERE id={$id}";
     $stmt = $this->query($query);
 
@@ -46,7 +46,7 @@ class UserModel extends Model {
    *
    * @return array
    */
-  public function getUserByEmail($email): array {
+  public function getUserByEmail(string $email): array {
     $query = "SELECT * FROM users WHERE email='{$email}'";
     $stmt = $this->query($query);
 
