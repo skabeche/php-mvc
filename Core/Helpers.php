@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Core\Router;
+
 /**
  * Helper and common functions used in the application.
  */
@@ -10,9 +12,9 @@ class Helpers {
   /**
    * Check if the current page is the frontpage.
    */
-  function isFrontpage(): bool {
-    $current_url = $_SERVER['REQUEST_URI'];
-    if ($current_url == '/') {
+  public static function isFrontpage(): bool {
+    $currentUrl = Router::getCurrentPath();
+    if ($currentUrl == '/') {
       return true;
     }
 

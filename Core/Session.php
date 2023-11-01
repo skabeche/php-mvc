@@ -55,7 +55,7 @@ class Session {
    * @param string $role
    *   Access role to check.
    */
-  public static function hasAccessByRole($role): bool {
+  public static function hasAccessByRole(string $role): bool {
     if ($role == 'auth') {
       if (!self::isLoggedIn()) {
         return false;

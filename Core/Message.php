@@ -18,7 +18,7 @@ class Message {
    *   - 'error'
    *   - 'warning'
    */
-  public static function set($message = NULL, $type = 'success'): void {
+  public static function set(string $message = NULL, string $type = 'success'): void {
     if ($message) {
       $_SESSION['message']['text'] = $message;
       $_SESSION['message']['type'] = $type;

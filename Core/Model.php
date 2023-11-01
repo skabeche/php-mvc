@@ -14,7 +14,7 @@ class Model {
     $this->db = Connection::getInstance();
   }
 
-  protected function query($query, $params = []) {
+  protected function query(string $query, array $params = []): mixed {
     $stmt = $this->db->prepare($query);
     $stmt->execute($params);
 
