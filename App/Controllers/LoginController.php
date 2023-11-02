@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Core\Controller;
 use Core\Message;
 use Core\Session;
+use Core\Request;
 use App\Models\UserModel;
 
 class LoginController extends Controller {
@@ -20,7 +21,9 @@ class LoginController extends Controller {
   public function login(): void {
     $session = new Session;
     $session::create();
-    Message::set('You are now logged in');
+    $request = new Request();
+
+    Message::set("Hi {$request->getHttpData()['email']}, you are now logged in.");
     header('Location: /dashboard');
     exit;
   }

@@ -27,7 +27,6 @@ class Session {
 
   /**
    * Creates logged session.
-   * 
    */
   public static function create(): void {
     // $_SESSION["sessionId"] = bin2hex(random_bytes(24));

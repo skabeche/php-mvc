@@ -3,6 +3,7 @@
 namespace Core;
 
 use Core\Utils;
+use Core\Request;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -40,12 +41,10 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Router {
 
-  protected $requestHttpValues;
-  protected $requestHttpMethod;
+  protected $request;
 
   public function __construct() {
-    $this->requestHttpValues = Utils::sanitize($_REQUEST);
-    $this->requestHttpMethod = strtolower($_SERVER["REQUEST_METHOD"]);
+    $this->request = new Request();
   }
 
   private static function getRoutes(): array {
@@ -57,9 +56,9 @@ class Router {
   }
 
   public static function getCurrentPath(): string {
-    $request = parse_url($_SERVER['REQUEST_URI']);
+    $uri = parse_url($_SERVER['REQUEST_URI']);
 
-    return empty($request['path']) ? '/' : $request['path'];
+    return empty($uri['path']) ? '/' : $uri['path'];
   }
 
   private static function getKeyPath(): int|bool {
@@ -119,21 +118,18 @@ class Router {
     if (!isset($settings['controller'])) {
       throw new \Exception('Controller not found.');
     }
-    if (!array_key_exists($this->requestHttpMethod, $methods)) {
+    if (!array_key_exists($this->request->getHttpMethod(), $methods)) {
       http_response_code(405);
-      throw new \Exception("Method {$this->requestHttpMethod} not allowed.");
+      throw new \Exception("Method {$this->request->getHttpMethod()} not allowed.");
     }
 
     // Get specific controller.
     // Create an instance of the specific controller.
     $appController = "App\Controllers\\" . $settings['controller'];
     $instanceController = new $appController();
-    // Call the specific function to handle the request and output data for view.
-    $callback = $methods[$this->requestHttpMethod];
-    $data = $instanceController->$callback();
-    // Output request method and values.
-    $data['request']['method'] = $this->requestHttpMethod;
-    $data['request']['values'] = $this->requestHttpValues;
+    // Call the specific action to handle the request and output data for view.
+    $action = $methods[$this->request->getHttpMethod()];
+    $data = $instanceController->$action() ?? [];
 
     return $data;
   }
