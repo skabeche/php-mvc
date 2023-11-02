@@ -62,7 +62,7 @@ class Router {
     return empty($request['path']) ? '/' : $request['path'];
   }
 
-  private function getKeyPath(): int|bool {
+  private static function getKeyPath(): int|bool {
     $routes = self::getRoutes();
     $currentPath = self::getCurrentPath();
 
@@ -74,9 +74,9 @@ class Router {
     return $keyPath;
   }
 
-  private function parsePath(): array {
+  private static function parsePath(): array {
     $routes = self::getRoutes();
-    $keyPath = $this->getKeyPath();
+    $keyPath = self::getKeyPath();
     $output = [];
 
     if (!isset($routes['pages'][$keyPath]['settings'])) {
@@ -100,13 +100,13 @@ class Router {
   }
 
   public function getSettings(): array {
-    $settings = $this->parsePath();
+    $settings = self::parsePath();
 
     return $settings['settings'];
   }
 
   public function getMethods(): array {
-    $methods = $this->parsePath();
+    $methods = self::parsePath();
 
     return $methods['methods'];
   }
@@ -114,32 +114,27 @@ class Router {
   public function getControllerData(): array {
     $settings = $this->getSettings();
     $methods = $this->getMethods();
+    $data = [];
 
-    // Get specific controller.
-    if (isset($settings['controller'])) {
-      // Create an instance of the specific controller.
-      $appController = "App\Controllers\\" . $settings['controller'];
-      $instanceController = new $appController();
-
-      if (!empty($methods)) {
-        if (!array_key_exists($this->requestHttpMethod, $methods)) {
-          http_response_code(405);
-          throw new \Exception('Method not allowed.');
-        }
-
-        // Call the specific function to handle the request and output data for view.
-        $callback = $methods[$this->requestHttpMethod];
-        $data = $instanceController->$callback();
-        // Output request method and values.
-        $data['request']['method'] = $this->requestHttpMethod;
-        $data['request']['values'] = $this->requestHttpValues;
-      } else {
-        throw new \Exception('Request method not found.');
-      }
-
-      return $data;
+    if (!isset($settings['controller'])) {
+      throw new \Exception('Controller not found.');
+    }
+    if (!array_key_exists($this->requestHttpMethod, $methods)) {
+      http_response_code(405);
+      throw new \Exception("Method {$this->requestHttpMethod} not allowed.");
     }
 
-    return [];
+    // Get specific controller.
+    // Create an instance of the specific controller.
+    $appController = "App\Controllers\\" . $settings['controller'];
+    $instanceController = new $appController();
+    // Call the specific function to handle the request and output data for view.
+    $callback = $methods[$this->requestHttpMethod];
+    $data = $instanceController->$callback();
+    // Output request method and values.
+    $data['request']['method'] = $this->requestHttpMethod;
+    $data['request']['values'] = $this->requestHttpValues;
+
+    return $data;
   }
 }

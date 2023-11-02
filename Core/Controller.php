@@ -15,11 +15,11 @@ class Controller {
   /**
    * Assign values/variables to the view and renders the view.
    */
-  public function renderView(mixed $view, array $data = []) {
+  public function renderView(string $view, array $data = []): string {
     foreach ($data as $key => $value) {
       $this->view->assign($key, $value);
     }
 
-    $this->view->render($view);
+    return $this->view->render($view);
   }
 }
