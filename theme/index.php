@@ -23,7 +23,7 @@
         <?php include __DIR__ . '/partials/message.php'; ?>
 
         <div id="region-content">
-          <?php $controller->renderView($settings['view'], $data); ?>
+          <?php echo $view; ?>
         </div>
       </section>
 

@@ -39,9 +39,10 @@ if (!$session::hasAccessByRole($settings['access_role'])) {
   exit;
 }
 
-// Get controller and specific controller data.
+// Get controller and specific controller data to render the view.
 $controller = new Controller();
-$data = $router->getControllerData();
+// Variable to use in theme to print the specific view.
+$view = $controller->renderView($settings['view'], $router->getControllerData());
 
 // Get the message system.
 $message = Message::get();

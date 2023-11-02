@@ -14,11 +14,13 @@ class View {
     $this->data[$key] = $value;
   }
 
-  public function render(string $view): void {
+  public function render(string $view): string {
     $viewPath = __DIR__ . '/../App/Views/' . $view . '.php';
     if (file_exists($viewPath)) {
       $data = $this->data;
+      ob_start();
       include_once $viewPath;
+      return ob_get_clean();
     } else {
       throw new \Exception("View not found: {$view}");
     }
