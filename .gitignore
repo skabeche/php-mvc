@@ -1,6 +1,7 @@
 # Project files
 .env
 /vendor
+/cache
 /theme/node_modules
 /theme/.php-tmp
 /public/dist
