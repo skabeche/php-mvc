@@ -6,6 +6,7 @@
  */
 
 use Core\Session;
+use Core\Auth;
 use Core\Router;
 use Core\Controller;
 use Core\Message;
@@ -45,7 +46,8 @@ $settings = $router->getSettings();
 /**
  * Check if user with a specific role has access to the current page.
  */
-if (!$session::hasAccessByRole($settings['access_role'])) {
+$auth = new Auth();
+if (!$auth::hasAccessByRole($settings['access_role'])) {
   Message::set('Access restricted.', 'error');
   header('Location: /');
   exit;

@@ -30,37 +30,6 @@ class Session {
    */
   public static function create(): void {
     // $_SESSION["sessionId"] = bin2hex(random_bytes(24));
-    $_SESSION["loggedIn"] = true;
-  }
-
-  /**
-   * Check if the user is authenticated.
-   * 
-   * TODO: a better and more solid check, it is only for demo purposes.
-   */
-  public static function isLoggedIn(): bool {
-    if ($_SESSION["loggedIn"] == true) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
-   * Check if user with a specific role has access to the resource.
-   * - guest
-   * - auth
-   * 
-   * @param string $role
-   *   Access role to check.
-   */
-  public static function hasAccessByRole(string $role): bool {
-    if ($role == 'auth') {
-      if (!self::isLoggedIn()) {
-        return false;
-      }
-    }
-
-    return true;
+    $_SESSION['loggedIn'] = true;
   }
 }

@@ -9,9 +9,9 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Implements routing and front controller.
  * 
- * Paths and theme settings are defined in the file "router.yml" on root level.
+ * Paths and theme settings are defined in the file "router.yml" on App folder.
  * 
- * Settings/variables for the theme of a specific page.
+ * Settings, methods and variables for the theme of a specific page.
  *
  *  An associative array containing:
  *   - controller: File name of the controller with the logic of the page
@@ -22,8 +22,8 @@ use Symfony\Component\Yaml\Yaml;
  *      - guest (not authenticated)
  *      - auth (authenticated)
  *   - methods:
- *      - get: Controller function to handle the logic.
- *      - post: Controller function to handle the logic.
+ *      - get: Controller action to handle the logic.
+ *      - post: Controller action to handle the logic.
  *
  * $settings = [
  *   'controller' => '',
@@ -113,7 +113,6 @@ class Router {
   public function getControllerData(): array {
     $settings = $this->getSettings();
     $methods = $this->getMethods();
-    $data = [];
 
     if (!isset($settings['controller'])) {
       throw new \Exception('Controller not found.');
@@ -123,7 +122,6 @@ class Router {
       throw new \Exception("Method {$this->request->getHttpMethod()} not allowed.");
     }
 
-    // Get specific controller.
     // Create an instance of the specific controller.
     $appController = "App\Controllers\\" . $settings['controller'];
     $instanceController = new $appController();
