@@ -77,8 +77,8 @@ pages:
       body_classes: "css classes for body tag"
       access_role: "(guest, auth), what role can access to the resource"
     methods:
-      get: "Controller function to handle the logic"
-      post: "Controller function to handle the logic"
+      get: "Controller action to handle the logic"
+      post: "Controller action to handle the logic"
 ```
 
 #### Views data

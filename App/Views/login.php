@@ -9,7 +9,7 @@
     <form id="form-login" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="mb-6">
         <label for="email" class="required">Email</label>
-        <input type="text" id="email" name="email" class="" value="<?php echo $data['request']['values']['email'] ?? ''; ?>" required>
+        <input type="email" id="email" name="email" class="" value="<?php echo $data['request']['values']['email'] ?? ''; ?>" required>
       </div>
       <div class="mb-6">
         <label for="password" class="required">Password</label>
