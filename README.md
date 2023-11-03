@@ -98,6 +98,46 @@ The system has 2 roles defined:
 
 Every time a new page is created in `routes.yml`, it is necessary to set what type of role can access the page. _Warning: Choose wise, it may have security implications depending on the role._
 
+## Caching system
+
+Cache is created by using the library [Phpfastcache](https://www.phpfastcache.com).
+
+It is stored in `/cache`.
+Some objects could be already cached.
+**Routes are cached**.
+
+It may get enabled/disabled in `.env` file. Be aware some cached elements might be disabled individually in code.
+
+```
+# Cache settings
+ENABLE_CACHE="true"
+```
+
+Cache can be cleared only deleting folder `/cache` for now.
+
+Example of how to cache data:
+
+```php
+use Core\Cache;
+
+function functionName(): array {
+  $cache = new Cache();
+  $key = 'keyName';
+
+  // Check if it is cached.
+  if ($cache->isCached($key)) {
+    return $cache->get($key);
+  }
+
+  // Do your stuff to create the data.
+  $data = [];
+  // Cache data 60 minutes.
+  $cache->set($data, $key, 3600);
+
+  return $data;
+}
+```
+
 ## Theme
 
 Although the basic theme is not built with any JS framework, [Vite](https://vitejs.dev/) is integrated in the `/theme` folder for a modern workflow (still work in progress).
@@ -117,6 +157,7 @@ npm run dev
 ```
 
 #### Build for production.
+
 (Works fine)
 
 ```bash

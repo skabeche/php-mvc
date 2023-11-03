@@ -4,6 +4,7 @@ namespace Core;
 
 use Core\Utils;
 use Core\Request;
+use Core\Cache;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -48,9 +49,18 @@ class Router {
   }
 
   private static function getRoutes(): array {
-    ob_start();
+    $cache = new Cache();
+    $key = 'routes';
 
+    // Check if routes are cached.
+    if ($cache->isCached($key)) {
+      return $cache->get($key);
+    }
+
+    // Get file with routes.
     $routes = Yaml::parseFile(__DIR__ . '/../App/routes.yml');
+    // Cache routes 1 day.
+    $cache->set($routes, $key, 86400);
 
     return $routes;
   }
