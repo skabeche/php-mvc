@@ -6,7 +6,7 @@ use Core\Controller;
 use Core\Session;
 
 class LogoutController extends Controller {
-  public function index(): array {
+  public function destroy(): array {
     $session = new Session();
     $session::destroy();
     header('Location: /');

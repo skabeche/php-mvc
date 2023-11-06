@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Utils;
 
 use Core\Router;
 
@@ -13,8 +13,7 @@ class Helpers {
    * Check if the current page is the frontpage.
    */
   public static function isFrontpage(): bool {
-    $currentUrl = Router::getCurrentPath();
-    if ($currentUrl == '/') {
+    if (Router::getCurrentPath() == '/') {
       return true;
     }
 

@@ -9,11 +9,11 @@
     <form id="form-login" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="mb-6">
         <label for="email" class="required">Email</label>
-        <input type="email" id="email" name="email" class="" value="<?php echo $data['request']['values']['email'] ?? ''; ?>" required>
+        <input type="email" id="email" name="email" value="<?php echo $data['post']['email'] ?? ''; ?>" required>
       </div>
       <div class="mb-6">
         <label for="password" class="required">Password</label>
-        <input type="password" id="password" name="password" class="" value="<?php echo $data['request']['values']['password'] ?? ''; ?>" required>
+        <input type="password" id="password" name="password" required>
       </div>
       <input type="submit" class="btn-primary" name="login" value="Log in">
     </form>

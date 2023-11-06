@@ -10,7 +10,7 @@ class Message {
   /**
    * Sets a message to display on the site.
    *
-   * @param string $message
+   * @param string|array $message
    *   (optional) The message to be displayed on the site.
    * @param string $type
    *   (optional) The type of message. Defaults to 'success'.
@@ -18,9 +18,14 @@ class Message {
    *   - 'error'
    *   - 'warning'
    */
-  public static function set(string $message = NULL, string $type = 'success'): void {
+  public static function set(string|array $message = NULL, string $type = 'success'): void {
     if ($message) {
-      $_SESSION['message']['text'] = $message;
+      if (is_array($message)) {
+        array_walk($message, fn (&$value, $key) => $value = "{$value}");
+        $_SESSION['message']['text'] = implode("<br/>", $message);
+      } else {
+        $_SESSION['message']['text'] = $message;
+      }
       $_SESSION['message']['type'] = $type;
     }
   }

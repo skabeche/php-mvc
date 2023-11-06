@@ -6,6 +6,8 @@ use Core\Connection;
 
 /**
  * Main model to be extended.
+ * 
+ * @todo Bind values.
  */
 class Model {
   protected $db;

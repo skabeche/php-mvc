@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Core\Utils;
+use Core\Utils\Sanitizer;
 
 class Request {
 
@@ -12,9 +12,9 @@ class Request {
 
   public function __construct() {
     $this->httpMethod = strtolower($_SERVER["REQUEST_METHOD"]);
-    $this->httpData = Utils::sanitize($_REQUEST);
+    $this->httpData = Sanitizer::sanitize($_REQUEST);
     parse_str($_SERVER['QUERY_STRING'], $params);
-    $this->queryString = Utils::sanitize($params);
+    $this->queryString = Sanitizer::sanitize($params);
   }
 
   public function getHttpMethod(): string {

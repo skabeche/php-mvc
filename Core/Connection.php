@@ -7,6 +7,8 @@ use PDOException;
 
 /**
  * DB connection.
+ * 
+ * @todo Bind values.
  */
 class Connection {
   private static $instance = null;
