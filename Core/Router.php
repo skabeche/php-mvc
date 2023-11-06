@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Core\Utils;
+use Core\Utils\Arrays;
 use Core\Request;
 use Core\Cache;
 use Symfony\Component\Yaml\Yaml;
@@ -76,7 +76,7 @@ class Router {
     $currentPath = self::getCurrentPath();
 
     // Get all routing paths.
-    $routerPaths = Utils::arrayColumnRecursive($routes, 'path');
+    $routerPaths = Arrays::arrayColumnRecursive($routes, 'path');
     // Get the key for the current path.
     $keyPath = array_search($currentPath, $routerPaths);
 
@@ -138,6 +138,10 @@ class Router {
     // Call the specific action to handle the request and output data for view.
     $action = $methods[$this->request->getHttpMethod()];
     $data = $instanceController->$action() ?? [];
+    // Add request values if exist.
+    if (!empty($this->request->getHttpData())) {
+      $data[$this->request->getHttpMethod()] = $this->request->getHttpData();
+    }
 
     return $data;
   }

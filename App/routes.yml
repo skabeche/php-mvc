@@ -39,7 +39,7 @@ pages:
       view: 'logout'
       access_role: 'auth'
     methods:
-      get: 'index'
+      get: 'destroy'
 
   - path: '/dashboard'
     settings:

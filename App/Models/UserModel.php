@@ -16,7 +16,7 @@ class UserModel extends Model {
     $query = "SELECT * FROM users";
     $stmt = $this->query($query);
 
-    // Fetch the results as an associative array.
+    // Fetch all results as an associative array.
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $users;
@@ -29,12 +29,12 @@ class UserModel extends Model {
    *
    * @return array
    */
-  public function getUserById(int $id): array {
+  public function getUserById(int $id): array|bool {
     $query = "SELECT * FROM users WHERE id={$id}";
     $stmt = $this->query($query);
 
-    // Fetch the results as an associative array
-    $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch the result as an associative array.
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     return $user;
   }
@@ -46,12 +46,12 @@ class UserModel extends Model {
    *
    * @return array
    */
-  public function getUserByEmail(string $email): array {
+  public function getUserByEmail(string $email): array|bool {
     $query = "SELECT * FROM users WHERE email='{$email}'";
     $stmt = $this->query($query);
 
-    // Fetch the results as an associative array
-    $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch the result as an associative array.
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     return $user;
   }
