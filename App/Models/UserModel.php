@@ -55,4 +55,19 @@ class UserModel extends Model {
 
     return $user;
   }
+
+  /**
+   * Create an user.
+   * 
+   * @param array $data
+   *
+   * @return mixed
+   */
+  public function create(array $data): mixed {
+    $password = password_hash($data['password'], PASSWORD_DEFAULT);;
+    $query = "INSERT INTO users (name, email, password) VALUES ('{$data['name']}', '{$data['email']}', '{$password}')";
+    $stmt = $this->query($query);
+
+    return $stmt;
+  }
 }

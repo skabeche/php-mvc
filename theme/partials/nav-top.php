@@ -8,6 +8,7 @@
   <nav class="nav-main text-sm offcanvas md:oncanvas">
     <ul class="flex gap-4 md:items-center">
       <?php if ($settings['access_role'] == 'guest') { ?>
+        <li><a href="/register">Register</a></li>
         <li><a href="/login">Log in</a></li>
       <?php } ?>
       <?php if ($settings['access_role'] == 'auth') { ?>
