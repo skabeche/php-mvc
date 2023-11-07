@@ -60,7 +60,7 @@
   h4,
   h5,
   h6 {
-    @apply flex items-center font-bold uppercase mb-6;
+    @apply flex items-center font-bold uppercase my-6;
   }
 
   h1 {
@@ -80,7 +80,7 @@
   }
 
   table {
-    @apply w-full text-left items-start rounded shadow bg-white p-4;
+    @apply w-full text-left items-start rounded shadow bg-white p-4 border-separate;
   }
 
   table tbody td,
@@ -98,7 +98,7 @@
 
   input:not([type=submit]),
   select {
-    @apply rounded px-4 py-2 border-gray-300 bg-white;
+    @apply rounded border-gray-300 bg-white;
   }
 }
 
@@ -114,4 +114,16 @@
 }
 .message-warning {
   @apply bg-amber-500;
+}
+
+/* Datatables */
+.datatable-top,
+.datatable-bottom {
+  @apply flex justify-between;
+}
+.datatable-top {
+  @apply mb-4;
+}
+.datatable-bottom {
+  @apply mt-4;
 }

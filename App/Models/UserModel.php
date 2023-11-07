@@ -13,7 +13,7 @@ class UserModel extends Model {
    * @return array
    */
   public function getAllUsers(): array {
-    $query = "SELECT * FROM users";
+    $query = "SELECT id, name, email FROM users";
     $stmt = $this->query($query);
 
     // Fetch all results as an associative array.
