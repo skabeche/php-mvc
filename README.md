@@ -4,7 +4,7 @@ Repository for PHP - MVC framework.
 
 ## Overview
 
-Simple MVC system created with PHP for demo purposes. A different approach creating routes/paths through a YAML file.
+MVC system created with PHP for demo purposes. A different approach creating routes/paths through a YAML file.
 
 On the front-end side, it utilizes Vite, Tailwind and Vanilla JavaScript.
 
@@ -32,7 +32,7 @@ Use [Kint](https://kint-php.github.io/kint/) to debug variables:
 
 Clone the project using git or download it.
 
-Run composer in your site to get PHP dependencies/libraries.
+Run composer in root folder to get PHP dependencies/libraries.
 
 ```bash
 composer install
@@ -77,17 +77,51 @@ pages:
       body_classes: "css classes for body tag"
       access_role: "(guest, auth), what role can access to the resource"
     methods:
-      get: "Controller action to handle the logic"
-      post: "Controller action to handle the logic"
+      get: "action in controller to handle the logic"
+      post: "action in controller to handle the logic"
 ```
 
-#### Views data
+#### Views
 
 The values for the view are stored in the array `$data`:
 
 ```php
 <p><?php echo $data['value']; ?></p>
 ```
+
+#### Validate input
+
+You can validate input with rules.
+ 
+Example of how to validate data:
+
+```php
+use Core\Request;
+use Core\Utils\Validation;
+
+function store(): void {
+  $request = new Request();
+  $validation = new Validation();
+
+  // Validate input.
+  $fields = [
+    'name' => 'required,max:255',
+    'email' => 'required|email|unique:users,email',
+    'password' => 'required',
+    'password2' => 'required|same:password'
+  ];
+  if (!$validation->validate($request->httpData, $fields, ['password2' => ['same' => 'Password fields does not match.']])) {
+    Message::set($validation->getErrors(), 'error');
+    return;
+  }
+
+  // If pass validation, do your stuff.
+  Message::set('Validation passed!');
+  return;
+}
+```
+
+See `Validation` class to check available rules.
 
 ## Users, roles and permissions
 

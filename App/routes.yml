@@ -41,6 +41,17 @@ pages:
     methods:
       get: 'destroy'
 
+  - path: '/register'
+    settings:
+      controller: 'RegisterController'
+      view: 'register'
+      title: 'Register'
+      body_classes: 'register-page'
+      access_role: 'guest'
+    methods:
+      get: 'index'
+      post: 'store'
+
   - path: '/dashboard'
     settings:
       controller: 'DashboardController'
