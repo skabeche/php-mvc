@@ -17,6 +17,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "simple-datatables": "^8.0.0",
     "vite-plugin-php": "^1.0.5"
   }
 }
