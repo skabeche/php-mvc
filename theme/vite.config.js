@@ -1,5 +1,12 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import usePHP from 'vite-plugin-php';
+import path from 'path';
+
+// Get env variables from root folder.
+const env = loadEnv(
+  'all',
+  path.resolve(path.dirname(__filename), "../")
+);
 
 export default defineConfig({
   plugins: [
@@ -9,13 +16,10 @@ export default defineConfig({
         "partials/nav-top.php",
         "partials/message.php",
         "partials/footer.php",
-      ]
-    })
+      ],
+    }),
   ],
-  // base: process.env.APP_ENV === 'dev'
-  //   ? '/'
-  //   : '/dist/',
-  base: '/dist',
+  base: env.VITE_APP_ENV === 'dev' ? '/' : '/dist',
   build: {
     // Output dir for production build.
     outDir: './../public/dist',
@@ -24,6 +28,7 @@ export default defineConfig({
     manifest: true,
     // Our entry.
     rollupOptions: {
+      input: path.resolve(path.dirname(__filename), "/scripts.js"),
       output: {
         // No hash in files.
         assetFileNames: `assets/[name].[ext]`,
