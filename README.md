@@ -92,14 +92,14 @@ The values for the view are stored in the array `$data`:
 #### Validate input
 
 You can validate input with rules.
- 
+
 Example of how to validate data:
 
 ```php
 use Core\Request;
 use Core\Utils\Validation;
 
-function store(): void {
+function functionName(): void {
   $request = new Request();
   $validation = new Validation();
 
@@ -174,7 +174,7 @@ function functionName(): array {
 
 ## Theme
 
-Although the basic theme is not built with any JS framework, [Vite](https://vitejs.dev/) is integrated in the `/theme` folder for a modern workflow (still work in progress).
+Although the basic theme is not built with any JS framework, [Vite](https://vitejs.dev/) is integrated in the `/theme` folder for a modern workflow (still a work in progress).
 
 Main CSS code is in the file `/theme/styles.css`. The theme is styled with [Tailwind](https://tailwindcss.com).
 
@@ -184,15 +184,21 @@ Main JavaScript code is in the file `/theme/scripts.js`. Code with Vanilla JavaS
 
 #### Start dev build process
 
-(Still work in progress, it does not reflect changes yet)
+Still a work in progress, it does not reflect changes yet. The plugin [vite-plugin-php](https://github.com/donnikitos/vite-plugin-php) is installed to process PHP files and there seem to be some issues with it.
 
 ```bash
 npm run dev
 ```
 
+Use build watch as an alternative.
+
+```bash
+npm run watch
+```
+
 #### Build for production.
 
-(Works fine)
+Works fine.
 
 ```bash
 npm run build
