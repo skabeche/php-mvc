@@ -31,7 +31,6 @@
   </main>
 
   <?php include __DIR__ . '/partials/footer.php'; ?>
-  <script type="module" src="/scripts.js"></script>
 </body>
 
 </html>
