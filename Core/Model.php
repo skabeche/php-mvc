@@ -3,6 +3,7 @@
 namespace Core;
 
 use Core\Connection;
+use PDO;
 
 /**
  * Main model to be extended.
@@ -21,5 +22,21 @@ class Model {
     $stmt->execute($params);
 
     return $stmt;
+  }
+
+    /**
+   * Find a row in a table by column and value.
+   * 
+   * @param array $table
+   * @param int $column
+   * @param int|string $value
+   *
+   * @return array
+   */
+  public function fetch(string $table, string $column, int|string $value): array|bool {
+    $query = is_int($value) ? "SELECT * FROM {$table} WHERE {$column}={$value}" : "SELECT * FROM {$table} WHERE {$column}='{$value}'";
+    $stmt = $this->query($query);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 }

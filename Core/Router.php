@@ -71,7 +71,26 @@ class Router {
     return empty($uri['path']) ? '/' : $uri['path'];
   }
 
-  private static function getKeyPath(): int|bool {
+  public function handlePathWithParams($routes): int|bool {
+    $currentPath = self::getCurrentPath();
+
+    foreach ($routes as $key => $route) {
+      // Convert route to a regular expression
+      $pattern = preg_replace('/:[^\/]+/', '([^\/]+)', $route);
+      // Check if the URL matches the pattern
+      if (preg_match("#^$pattern$#", $currentPath, $matches)) {
+        $params = explode(':', $route);
+        // Set the param in request.
+        $this->request->setParam($params[1], $matches[1]);
+        return $key;
+      }
+    }
+
+    // Page Not Found
+    return false;
+  }
+
+  private function getKeyPath(): int|bool {
     $routes = self::getRoutes();
     $currentPath = self::getCurrentPath();
 
@@ -79,13 +98,19 @@ class Router {
     $routerPaths = Arrays::arrayColumnRecursive($routes, 'path');
     // Get the key for the current path.
     $keyPath = array_search($currentPath, $routerPaths);
+    if ($keyPath !== false) {
+      return $keyPath;
+    }
 
+    // Let's see if it is a path with params.
+    $keyPath = self::handlePathWithParams($routerPaths);
     return $keyPath;
   }
 
-  private static function parsePath(): array {
+  private function parsePath(): array {
     $routes = self::getRoutes();
-    $keyPath = self::getKeyPath();
+    $keyPath = $this->getKeyPath();
+
     $output = [];
 
     if (!isset($routes['pages'][$keyPath]['settings'])) {
@@ -123,24 +148,25 @@ class Router {
   public function getControllerData(): array {
     $settings = $this->getSettings();
     $methods = $this->getMethods();
+    $httpMethod = $this->request->getMethod();
 
     if (!isset($settings['controller'])) {
       throw new \Exception('Controller not found.');
     }
-    if (!array_key_exists($this->request->getHttpMethod(), $methods)) {
+    if (!array_key_exists($httpMethod, $methods)) {
       http_response_code(405);
-      throw new \Exception("Method {$this->request->getHttpMethod()} not allowed.");
+      throw new \Exception("Method {$httpMethod} not allowed.");
     }
 
     // Create an instance of the specific controller.
     $appController = "App\Controllers\\" . $settings['controller'];
     $instanceController = new $appController();
     // Call the specific action to handle the request and output data for view.
-    $action = $methods[$this->request->getHttpMethod()];
+    $action = $methods[$this->request->getMethod()];
     $data = $instanceController->$action() ?? [];
     // Add request values if exist.
-    if (!empty($this->request->getHttpData())) {
-      $data[$this->request->getHttpMethod()] = $this->request->getHttpData();
+    if (!empty($this->request->getBody())) {
+      $data[$httpMethod] = $this->request->getBody();
     }
 
     return $data;
