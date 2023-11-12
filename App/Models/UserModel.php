@@ -17,9 +17,7 @@ class UserModel extends Model {
     $stmt = $this->query($query);
 
     // Fetch all results as an associative array.
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return $users;
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   /**
@@ -30,13 +28,7 @@ class UserModel extends Model {
    * @return array
    */
   public function getUserById(int $id): array|bool {
-    $query = "SELECT * FROM users WHERE id={$id}";
-    $stmt = $this->query($query);
-
-    // Fetch the result as an associative array.
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    return $user;
+    return $this->fetch('users', 'id', $id);
   }
 
   /**
@@ -47,13 +39,7 @@ class UserModel extends Model {
    * @return array
    */
   public function getUserByEmail(string $email): array|bool {
-    $query = "SELECT * FROM users WHERE email='{$email}'";
-    $stmt = $this->query($query);
-
-    // Fetch the result as an associative array.
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    return $user;
+    return $this->fetch('users', 'email', $email);
   }
 
   /**
@@ -66,8 +52,7 @@ class UserModel extends Model {
   public function create(array $data): mixed {
     $password = password_hash($data['password'], PASSWORD_DEFAULT);;
     $query = "INSERT INTO users (name, email, password) VALUES ('{$data['name']}', '{$data['email']}', '{$password}')";
-    $stmt = $this->query($query);
 
-    return $stmt;
+    return $this->query($query);
   }
 }

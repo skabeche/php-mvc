@@ -6,26 +6,42 @@ use Core\Utils\Sanitizer;
 
 class Request {
 
-  public $httpMethod;
-  public $httpData;
+  public $method;
+  public static $params = [];
   public $queryString;
 
   public function __construct() {
-    $this->httpMethod = strtolower($_SERVER["REQUEST_METHOD"]);
-    $this->httpData = Sanitizer::sanitize($_REQUEST);
+    // Get method.
+    $method = strtolower($_SERVER["REQUEST_METHOD"]);
+    $this->method = $method;
+    // Get params according to method.
+    self::$params += method_exists($this, $method) ? $this->$method() : [];
+    // Get query string from URL.
     parse_str($_SERVER['QUERY_STRING'], $params);
     $this->queryString = Sanitizer::sanitize($params);
   }
 
-  public function getHttpMethod(): string {
-    return $this->httpMethod;
-  }
-
-  public function getHttpData(): array {
-    return $this->httpData;
+  public function getMethod(): string {
+    return $this->method;
   }
 
   public function getQueryString(): array {
     return $this->queryString;
+  }
+
+  public function getBody(): array {
+    return self::$params;
+  }
+
+  public function setParam(string $key, string $value) {
+    self::$params[$key] = $value;
+  }
+
+  public function get() {
+    return Sanitizer::sanitize($_GET);
+  }
+
+  public function post() {
+    return Sanitizer::sanitize($_POST);
   }
 }

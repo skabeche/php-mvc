@@ -28,14 +28,14 @@ class LoginController extends Controller {
       'email' => 'required|email',
       'password' => 'required',
     ];
-    if (!$validation->validate($request->httpData, $fields)) {
+    if (!$validation->validate($request->getBody(), $fields)) {
       Message::set($validation->getErrors(), 'error');
       return;
     }
 
     // If pass validation, check stored credentials.
     $user = new UserModel();
-    $userData = $user->getUserByEmail($request->getHttpData()['email']);
+    $userData = $user->getUserByEmail($request->getBody()['email']);
     // If the user does not exist.
     if (!$userData) {
       Message::set('Sorry, email or password are not recognised. Check your credentials and try again.', 'error');
@@ -43,7 +43,7 @@ class LoginController extends Controller {
     }
 
     // Check if the password is correct.
-    if (password_verify($request->getHttpData()['password'], $userData['password'])) {
+    if (password_verify($request->getBody()['password'], $userData['password'])) {
       Message::set('You are logged in.');
       $session = new Session;
       $session::create();

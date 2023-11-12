@@ -62,6 +62,16 @@ pages:
     methods:
       get: 'index'
 
+  - path: '/users/:id'
+    settings:
+      controller: 'UsersController'
+      view: 'user'
+      title: 'User'
+      body_classes: 'user-page'
+      access_role: 'auth'
+    methods:
+      get: 'show'
+
 # Error pages.
 pages.error:
   404:
