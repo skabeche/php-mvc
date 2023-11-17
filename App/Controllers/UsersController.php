@@ -17,15 +17,7 @@ class UsersController extends Controller {
   public function index(): array {
     $output = [];
 
-    return $output;
-  }
-
-  public function show(): array {
-    $request = new Request();
-    $output = [];
-    $id = $request->getBody()['id'];
-
-    $output['user'] = $this->user->getUserById((int) $id);
+    $output['users'] = $this->user->getAllUsers();
 
     return $output;
   }

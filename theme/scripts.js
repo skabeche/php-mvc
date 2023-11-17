@@ -2,8 +2,12 @@
  * @file
  * Custom scripts for PHP MVC.
  *
+ * @see https://github.com/fiduswriter/Simple-DataTables
+ * @see https://github.com/chinchang/hint.css
  */
+
 import { DataTable } from "simple-datatables";
+import "hint.css";
 
 // Responsive menu.
 const navbarToggler = document.querySelector('.navbar-toggler');

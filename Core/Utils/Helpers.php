@@ -13,7 +13,8 @@ class Helpers {
    * Check if the current page is the frontpage.
    */
   public static function isFrontpage(): bool {
-    if (Router::getCurrentPath() == '/') {
+    $router = new Router();
+    if ($router->getCurrentPath() == '/') {
       return true;
     }
 

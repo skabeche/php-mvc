@@ -6,7 +6,7 @@
     Login
   </h1>
   <div class="">
-    <form id="form-login" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+    <form id="form-login" method="post" action="">
       <div class="mb-6">
         <label for="email" class="required">Email</label>
         <input type="email" id="email" name="email" value="<?php echo $data['post']['email'] ?? ''; ?>" required>

@@ -1,4 +1,4 @@
-<h1>Profile user <?php echo $data['user']['name']; ?></h1>
+<h1>User <?php echo $data['user']['name']; ?></h1>
 
 <section>
   <ul>

@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use Core\Controller;
 use Core\Message;
-use Core\Session;
 use Core\Request;
 use Core\Utils\Validation;
 use App\Models\UserModel;
@@ -29,14 +28,14 @@ class RegisterController extends Controller {
       'password' => 'required',
       'password2' => 'required|same:password'
     ];
-    if (!$validation->validate($request->httpData, $fields, ['password2' => ['same' => 'Password fields does not match.']])) {
+    if (!$validation->validate($request->getBody(), $fields, ['password2' => ['same' => 'Password fields does not match.']])) {
       Message::set($validation->getErrors(), 'error');
       return;
     }
 
     // If pass validation, create user.
     $user = new UserModel();
-    $userCreated = $user->create($request->getHttpData());
+    $userCreated = $user->create($request->getBody());
     if ($userCreated) {
       Message::set('Thanks for registering.');
       return;
