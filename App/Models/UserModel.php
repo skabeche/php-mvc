@@ -55,4 +55,30 @@ class UserModel extends Model {
 
     return $this->query($query);
   }
+
+  /**
+   * Update an user.
+   * 
+   * @param array $data
+   *
+   * @return mixed
+   */
+  public function update(array $data): mixed {
+    $query = "UPDATE users SET name='{$data['name']}', email='{$data['email']}' WHERE id={$data['id']}";
+
+    return $this->query($query);
+  }
+
+  /**
+   * Delete an user.
+   * 
+   * @param int $id
+   *
+   * @return mixed
+   */
+  public function delete(int $id): mixed {
+    $query = "DELETE FROM users WHERE id={$id}";
+
+    return $this->query($query);
+  }
 }

@@ -7,26 +7,4 @@
 </h1>
 
 <p>Welcome to dashboard.</p>
-<p>Example of getting data from database.</p>
-
-<h2>Users list</h2>
-<table id="users-list">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($data['users'] as $user) { ?>
-      <tr>
-        <th><?php echo $user['id'] ?></th>
-        <th><?php echo $user['name'] ?></th>
-        <th><a href="mailto:<?php echo $user['email'] ?>"><?php echo $user['email'] ?></a></th>
-        <th><a href="/users/<?php echo $user['id'] ?>">See user</a></th>
-      </tr>
-    <?php } ?>
-  </tbody>
-</table>
+<p>Example of getting data from database: <a href="/users">See users</a></p>

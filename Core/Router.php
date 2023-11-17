@@ -2,9 +2,10 @@
 
 namespace Core;
 
-use Core\Utils\Arrays;
 use Core\Request;
 use Core\Cache;
+use Core\Utils\Sanitizer;
+use Core\Utils\Arrays;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -48,7 +49,7 @@ class Router {
     $this->request = new Request();
   }
 
-  private static function getRoutes(): array {
+  private function getRoutes(): array {
     $cache = new Cache();
     $key = 'routes';
 
@@ -65,21 +66,25 @@ class Router {
     return $routes;
   }
 
-  public static function getCurrentPath(): string {
+  public function getCurrentPath(): string {
     $uri = parse_url($_SERVER['REQUEST_URI']);
-
+    $uri = Sanitizer::sanitize($uri);
+    
     return empty($uri['path']) ? '/' : $uri['path'];
   }
 
   public function handlePathWithParams($routes): int|bool {
-    $currentPath = self::getCurrentPath();
+    $currentPath = $this->getCurrentPath();
 
     foreach ($routes as $key => $route) {
       // Convert route to a regular expression
       $pattern = preg_replace('/:[^\/]+/', '([^\/]+)', $route);
       // Check if the URL matches the pattern
       if (preg_match("#^$pattern$#", $currentPath, $matches)) {
+        // @todo this is pretty weak, improve and accept multiple arguments.
         $params = explode(':', $route);
+        // Delete anything after the param.
+        $params[1] = preg_replace('/\/[a-z]*/', '', $params[1]);
         // Set the param in request.
         $this->request->setParam($params[1], $matches[1]);
         return $key;
@@ -91,8 +96,8 @@ class Router {
   }
 
   private function getKeyPath(): int|bool {
-    $routes = self::getRoutes();
-    $currentPath = self::getCurrentPath();
+    $routes = $this->getRoutes();
+    $currentPath = $this->getCurrentPath();
 
     // Get all routing paths.
     $routerPaths = Arrays::arrayColumnRecursive($routes, 'path');
@@ -103,14 +108,13 @@ class Router {
     }
 
     // Let's see if it is a path with params.
-    $keyPath = self::handlePathWithParams($routerPaths);
+    $keyPath = $this->handlePathWithParams($routerPaths);
     return $keyPath;
   }
 
   private function parsePath(): array {
-    $routes = self::getRoutes();
+    $routes = $this->getRoutes();
     $keyPath = $this->getKeyPath();
-
     $output = [];
 
     if (!isset($routes['pages'][$keyPath]['settings'])) {
@@ -134,13 +138,13 @@ class Router {
   }
 
   public function getSettings(): array {
-    $settings = self::parsePath();
+    $settings = $this->parsePath();
 
     return $settings['settings'];
   }
 
   public function getMethods(): array {
-    $methods = self::parsePath();
+    $methods = $this->parsePath();
 
     return $methods['methods'];
   }

@@ -110,7 +110,7 @@ function functionName(): void {
     'password' => 'required',
     'password2' => 'required|same:password'
   ];
-  if (!$validation->validate($request->httpData, $fields, ['password2' => ['same' => 'Password fields does not match.']])) {
+  if (!$validation->validate($request->getBody(), $fields, ['password2' => ['same' => 'Password fields does not match.']])) {
     Message::set($validation->getErrors(), 'error');
     return;
   }

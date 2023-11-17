@@ -62,15 +62,58 @@ pages:
     methods:
       get: 'index'
 
-  - path: '/users/:id'
+  - path: '/users'
     settings:
       controller: 'UsersController'
-      view: 'user'
-      title: 'User'
-      body_classes: 'user-page'
+      view: 'users'
+      title: 'Users'
+      body_classes: 'users-page'
       access_role: 'auth'
     methods:
-      get: 'show'
+      get: 'index'
+
+  - path: '/users/create'
+    settings:
+      controller: 'UserController'
+      view: 'users/create'
+      title: 'Create user'
+      body_classes: 'users-create-page'
+      access_role: 'auth'
+    methods:
+      get: 'index'
+      post: 'create'
+
+  - path: '/users/:id'
+    settings:
+      controller: 'UserController'
+      view: 'users/view'
+      title: 'View user'
+      body_classes: 'user-view-page'
+      access_role: 'auth'
+    methods:
+      get: 'index'
+
+  - path: '/users/:id/edit'
+    settings:
+      controller: 'UserController'
+      view: 'users/edit'
+      title: 'Edit user'
+      body_classes: 'user-edit-page'
+      access_role: 'auth'
+    methods:
+      get: 'index'
+      post: 'edit'
+
+  - path: '/users/:id/delete'
+    settings:
+      controller: 'UserController'
+      view: 'users/delete'
+      title: 'Delete user'
+      body_classes: 'user-delete-page'
+      access_role: 'auth'
+    methods:
+      get: 'index'
+      post: 'delete'
 
 # Error pages.
 pages.error:

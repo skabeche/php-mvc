@@ -4,7 +4,7 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-block text-center text-sm py-3 px-5 rounded border cursor-pointer border-blue-500 bg-blue-500 text-white font-bold no-underline hover:text-blue-500 hover:border-blue-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all;
+    @apply inline-block text-center text-sm py-3 px-5 rounded border cursor-pointer border-blue-500 bg-blue-500 text-white font-bold no-underline hover:no-underline hover:text-blue-500 hover:border-blue-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all;
   }
 
   .btn-secondary {
@@ -80,19 +80,27 @@
   }
 
   table {
-    @apply w-full text-left items-start rounded shadow bg-white p-4 border-separate;
+    @apply w-full text-left items-start shadow rounded bg-white;
   }
 
-  table tbody td,
-  table tbody th {
-    @apply p-2 align-top;
+  table tbody tr {
+    @apply odd:bg-gray-100;
+  }
+
+  table td,
+  table th {
+    @apply p-4 align-top;
   }
 
   label {
     @apply block hover:cursor-pointer;
   }
 
-  input:not([type=submit]) {
+  input[type=checkbox] {
+    @apply hover:cursor-pointer;
+  }
+
+  input:not(:is([type=submit], [type=checkbox])) {
     @apply w-full;
   }
 
@@ -126,4 +134,15 @@
 }
 .datatable-bottom {
   @apply mt-4;
+}
+
+/* Actions */
+a.actions-view {
+  @apply text-green-500;
+}
+a.actions-edit {
+  @apply text-amber-500;
+}
+a.actions-delete {
+  @apply text-red-500;
 }

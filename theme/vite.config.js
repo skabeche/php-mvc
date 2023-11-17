@@ -28,7 +28,6 @@ export default defineConfig({
     manifest: true,
     // Our entry.
     rollupOptions: {
-      input: path.resolve(path.dirname(__filename), "/scripts.js"),
       output: {
         // No hash in files.
         assetFileNames: `assets/[name].[ext]`,

@@ -18,7 +18,9 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "hint.css": "^2.7.0",
     "simple-datatables": "^8.0.0",
+    "sweetalert2": "^11.9.0",
     "vite-plugin-php": "^1.0.5"
   }
 }
