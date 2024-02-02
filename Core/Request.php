@@ -6,9 +6,9 @@ use Core\Utils\Sanitizer;
 
 class Request {
 
-  public $method;
-  public static $params = [];
-  public $queryString;
+  private $method;
+  private static $params = [];
+  private $queryString;
 
   public function __construct() {
     // Get method.

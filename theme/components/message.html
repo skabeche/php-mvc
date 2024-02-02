@@ -1,0 +1,16 @@
+{% if message is not empty %}
+  <div id="message" class="message message-{{ message.type }} mb-5" role="alert">
+    <div class="flex gap-3">
+      {% if message.type == 'success' %}
+        <img class="w-6 h-6" src="/images/message-success.svg" alt="Success">
+      {% endif %}
+      {% if message.type == 'error' %}
+        <img class="w-6 h-6" src="/images/message-error.svg" alt="Error">
+      {% endif %}
+      {% if message.type == 'warning' %}
+        <img class="w-6 h-6" src="/images/message-warning.svg" alt="Warning">
+      {% endif %}
+      {{ message.text|raw }}
+    </div>
+  </div>
+{% endif %}

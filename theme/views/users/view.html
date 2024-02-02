@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block title %}User {{ data.user.name }}{% endblock %}
+
+{% block content %}
+<h1>User {{ data.user.name }}</h1>
+
+<section>
+  <ul>
+    <li><strong>ID:</strong> {{ data.user.id }}</li>
+    <li><strong>Name:</strong> {{ data.user.name }}</li>
+    <li><strong>Email:</strong> <a href="mailto:{{ user.email }}">{{ data.user.email }}</a></li>
+  </ul>
+</section>
+{% endblock %}

@@ -27,6 +27,7 @@
         "symfony/yaml": "^6.3",
         "vlucas/phpdotenv": "^5.5",
         "guzzlehttp/guzzle": "^7.7",
-        "phpfastcache/phpfastcache": "^9.1"
+        "phpfastcache/phpfastcache": "^9.1",
+        "twig/twig": "^3.0"
     }
 }

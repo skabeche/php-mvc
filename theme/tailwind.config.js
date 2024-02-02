@@ -1,9 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./../App/Views/**/*.{html,php}",
     "./index.{html,php}",
+    "./components/**/*.{html,php}",
     "./partials/**/*.{html,php}"
+    // "./**/*.{html,php}",
   ],
   plugins: [
     require('@tailwindcss/forms'),
