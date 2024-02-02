@@ -54,14 +54,17 @@ if (!$auth::hasAccessByRole($settings['access_role'])) {
 }
 
 /**
+ * Get the message system.
+ */
+$message = Message::get();
+
+/**
  * Get controller and specific controller data.
  * Render the View.
  */
 $controller = new Controller();
-// Variable to use in theme to render the specific view.
-$view = $controller->renderView($settings['view'], $router->getControllerData());
+$variables['data'] = $router->getControllerData();
+$variables['settings'] = $settings;
+$variables['message'] = $message;
 
-/**
- * Get the message system.
- */
-$message = Message::get();
+$controller->renderView($settings['view'], $variables);

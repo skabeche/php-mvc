@@ -8,7 +8,7 @@ MVC system created with PHP for demo purposes. A different approach creating rou
 
 On the front-end side, it utilizes Vite, Tailwind and Vanilla JavaScript.
 
-It still needs many improvements, changes and testing, I do not think the system is ready for production but give it a try.
+**It's a work in progress and not finished**. It still needs many improvements, changes and testing, I do not think the system is ready for production but give it a try.
 
 ## Requirements
 
@@ -184,7 +184,7 @@ Main JavaScript code is in the file `/theme/scripts.js`. Code with Vanilla JavaS
 
 #### Start dev build process
 
-Still a work in progress, it does not reflect changes yet. The plugin [vite-plugin-php](https://github.com/donnikitos/vite-plugin-php) is installed to process PHP files and there seem to be some issues with it.
+Still a work in progress, it does not reflect changes yet in dev.
 
 ```bash
 npm run dev

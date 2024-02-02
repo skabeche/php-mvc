@@ -1,9 +1,15 @@
+!.gitkeep
+
 # Project files
 .env
 /vendor
-/cache
+/cache/*
 /theme/node_modules
 /theme/.php-tmp
 /public/dist
 /public/manifest.json
 .phpunit.result.cache
+
+# SQL script files
+*.sql
+*.sql.gz

@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
-import usePHP from 'vite-plugin-php';
+// import usePHP from 'vite-plugin-php';
+import vituum from 'vituum'
 import path from 'path';
 
 // Get env variables from root folder.
@@ -10,15 +11,18 @@ const env = loadEnv(
 
 export default defineConfig({
   plugins: [
-    usePHP({
-      entry: [
-        "index.php",
-        "partials/nav-top.php",
-        "partials/message.php",
-        "partials/footer.php",
-      ],
-    }),
+    vituum()
   ],
+  // plugins: [
+  //   usePHP({
+  //     entry: [
+  //       "base.php",
+  //       // "partials/nav-top.php",
+  //       // "partials/message.php",
+  //       // "partials/footer.php",
+  //     ],
+  //   }),
+  // ],
   base: env.VITE_APP_ENV === 'dev' ? '/' : '/dist',
   build: {
     // Output dir for production build.
@@ -28,6 +32,13 @@ export default defineConfig({
     manifest: true,
     // Our entry.
     rollupOptions: {
+      input: [
+        './index.html',
+        './partials/**/*.html',
+        './views/**/*.html',
+        './components/**/*.html',
+        // './images/**/*.*',
+      ],
       output: {
         // No hash in files.
         assetFileNames: `assets/[name].[ext]`,

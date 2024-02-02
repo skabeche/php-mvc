@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+{% block title %}Delete user {{ data.user.name }}?{% endblock %}
+
+{% block content %}
+<h1>Are you sure to delete user {{ data.user.name }}?</h1>
+
+<section>
+  <ul class="mb-10">
+    <li><strong>ID:</strong> {{ data.user.id }}</li>
+    <li><strong>Name:</strong> {{ data.user.name }}</li>
+    <li><strong>Email:</strong> <a href="mailto:{{ user.email }}">{{ data.user.email }}</a></li>
+  </ul>
+  <form action="" method="post" class="flex items-center gap-2">
+    <input type="hidden" id="id" name="id" value="{{ user.id }}">
+    <a href="/users" class="btn-primary">Cancel</a>
+    <input type="submit" class="btn-secondary" id="delete" name="delete" value="Delete user">
+  </form>
+</section>
+{% endblock %}

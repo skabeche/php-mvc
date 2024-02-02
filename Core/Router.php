@@ -73,7 +73,7 @@ class Router {
     return empty($uri['path']) ? '/' : $uri['path'];
   }
 
-  public function handlePathWithParams($routes): int|bool {
+  private function handlePathWithParams($routes): int|bool {
     $currentPath = $this->getCurrentPath();
 
     foreach ($routes as $key => $route) {
